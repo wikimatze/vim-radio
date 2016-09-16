@@ -1,0 +1,10 @@
+*vim-radio.txt*  Use mplayer to play predefined streaming stations.
+
+Being able to change the song, volume, stop, and restart songs.
+
+1. Intro *intro*
+I was using https://github.com/klen/unite-radio.vim to get music plaid
+when starting vim. It uses unite to display the radio stations in a extra
+window.
+
+vim:tw=78:ts=8:ft=help:norl:noet:fen:
