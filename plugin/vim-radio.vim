@@ -6,12 +6,22 @@ endif
 command! -complete=customlist,Radios -nargs=1 Radio call GetRadioUrl('<args>')
 
 function! Radios(A, L, P)
-    return ['bill', 'hallo']
+    if !exists('g:radio_stations')
+        let g:radio_stations = {
+            \ 'Streamingsoundtracks': 'http://www.streamingsoundtracks.com/modules/Listen/MP3-hi.pls',
+            \ 'Groovesalad': 'http://somafm.com/groovesalad.pls',
+            \ 'Dronezone': 'http://somafm.com/dronezone.pls',
+            \ 'Cliqhop': 'http://somafm.com/cliqhop.pls',
+            \ 'Beatblender': 'http://somafm.com/beatblender.pls',
+            \ 'Tranceponder': 'http://ubuntu.hbr1.com:19800/trance.ogg',
+            \ 'Dream Factory Ambient': 'http://ubuntu.hbr1.com:19800/ambient.ogg'
+            \}
+    endif
+        return keys(g:radio_stations)
 endfunction
 
 function! GetRadioUrl(station)
-    let stationAliases = ['bill', 'hallo']
-    let result = index(stationAliases, a:station)
+    let result = index(keys(g:radio_stations), a:station)
     if result != -1
         echo "Playing the radio station ". a:station
         call StartMplayer(a:station)
@@ -21,7 +31,6 @@ function! GetRadioUrl(station)
 endfunction
 
 function! StartMplayer(station)
-    let stations = { 'bill':'http://somafm.com/groovesalad.pls', 'hallo':2 }
-    let url = get(stations, a:station)
+    let url = get(g:radio_stations, a:station)
     execute "! mplayer -quiet " . url
 endfunction
